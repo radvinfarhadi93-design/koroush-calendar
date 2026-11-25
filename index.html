@@ -14,7 +14,7 @@
 <meta property="og:locale" content="fa_IR">
 <meta property="og:title" content="کوروش تقویم">
 <meta property="og:description" content="تقویم شمسی و میلادی با ساعت تهران، تعطیلات، روز کوروش بزرگ و شمارش معکوس روزها">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=Noto+Nastaliq+Urdu:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#eef6f5;--bg2:#e8e9fb;--card:rgba(255,255,255,.78);--cell:#fff;--text:#12212b;--muted:#6b7b86;--line:#dbe4e8;--a1:#0d9488;--a2:#6366f1;--red:#e11d48;--soft:#f1f6f8;color-scheme:light;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -102,13 +102,30 @@ h3{margin:0 0 10px;font-size:1.05rem}
 .chip{padding:8px 14px;min-height:40px}
 .res .n{font-size:2.1rem}
 }
+.brand{font-family:'Noto Nastaliq Urdu','Aref Ruqaa',serif;font-weight:600;font-size:2rem;line-height:2.1;margin:-6px 0 2px;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.city{font:inherit;color:#fff;background:rgba(255,255,255,.22);border:0;border-radius:10px;padding:8px;max-width:100%;font-size:16px}.city option,.city optgroup{color:#12212b}
+.an{width:150px;height:150px}.an svg{width:100%;height:100%;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
+.zd{font-size:.8rem;color:var(--a1);background:var(--soft);border-radius:999px;padding:2px 10px;margin-inline-start:8px;white-space:nowrap;font-weight:400}
+.srch{width:100%;font:inherit;color:var(--text);background:var(--cell);border:1px solid var(--line);border-radius:12px;padding:10px;font-size:16px}
+.azt{width:100%;border-collapse:collapse;font-size:.9rem}.azt td{padding:7px 4px;border-bottom:1px solid var(--line)}.azt td:last-child{text-align:end;font-weight:600}.azt tr.nx td{color:var(--a1);font-weight:800}
+.cd{font-size:1.7rem;font-weight:800;direction:ltr;text-align:center;color:var(--a1)}
+.sw{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.9rem}.sw input{width:20px;height:20px}
+.ring{position:fixed;inset-inline:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;border-radius:18px;padding:14px;z-index:9;display:none;align-items:center;justify-content:space-between;gap:10px;font-size:1.1rem}
+@media(max-width:640px){.an{width:120px;height:120px}.brand{font-size:1.6rem}}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.card{-webkit-backdrop-filter:blur(14px)}
+.ring{left:12px;right:12px}
+.srch{-webkit-appearance:none;appearance:none}
+.cell,.btn,.chip,.seg button{-webkit-appearance:none;appearance:none}
+@supports not (aspect-ratio:1/1){.cell{height:54px}}
+@supports (height:100dvh){body{min-height:100dvh}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="card hero">
-    <div style="position:relative"><div style="font-weight:800;font-size:1.4rem;margin-bottom:8px">💎 کوروش تقویم</div><div class="clock" id="clk">۰۰:۰۰:۰۰</div><small>ساعت رسمی تهران</small></div>
-    <div class="dates" id="hdates"></div>
+    <div style="position:relative"><div class="brand">💎 کوروش تقویم</div><div class="clock" id="clk">۰۰:۰۰:۰۰</div><small><select class="city" id="city" aria-label="انتخاب شهر"></select><span id="tzn"></span></small></div>
+    <div class="dates" id="hdates"></div><div class="an"><svg viewBox="-100 -100 200 200" id="an" aria-label="ساعت عقربه‌ای"></svg></div>
     <button class="tbtn" id="theme" aria-label="تغییر تم">☾ / ☀</button>
   </div>
 
@@ -120,13 +137,13 @@ h3{margin:0 0 10px;font-size:1.05rem}
       </div>
       <div class="bar"><div><h2 id="mt"></h2><p id="ms"></p></div></div>
       <div class="cg" id="cg"></div>
-      <div class="note">نقطهٔ قرمز = تعطیل رسمی و جمعه‌ها قرمز هستند. نقطهٔ طلایی = روز تاریخی و فرهنگی، و روز کوروش بزرگ با نشان 💎 الماسی است. در نمای میلادی فقط مناسبت‌های جهانی نمایش داده می‌شود و یکشنبه‌ها قرمزند. مناسبت‌های قمری بر اساس تقویم قمری محاسبه‌شده‌اند و ممکن است با رؤیت هلال یک روز جابه‌جا شوند؛ در این صورت اینجا اصلاح کنید:
+      <div class="note">نقطهٔ قرمز = تعطیل رسمی و جمعه‌ها قرمز هستند. نقطهٔ طلایی = روز تاریخی و فرهنگی، و روز کوروش بزرگ با نشان 💎 الماسی است. در نمای میلادی فقط مناسبت‌های جهانی نمایش داده می‌شود و یکشنبه‌ها قرمزند. مناسبت‌های قمری بر اساس تقویم قمری محاسبه‌شده‌اند و ممکن است با رؤیت هلال یک روز جابه‌جا شوند؛ در این صورت اینجا اصلاح کنید (تاریخ‌های قمری تا اسفند ۱۴۰۶ بر اساس تقویم رسمی ۱۴۰۵ و ۱۴۰۶ تنظیم شده و بعد از آن تخمینی است):
         <select id="hoff"><option value="-1">یک روز عقب‌تر</option><option value="0" selected>بدون تغییر</option><option value="1">یک روز جلوتر</option></select></div>
     </div>
     <div class="side">
-      <div class="card det" id="det"></div>
+      <div class="card"><h3>🔎 جستجوی مناسبت</h3><input class="srch" id="q" type="search" placeholder="مثلاً نوروز، غدیر، کریسمس، کوروش…"><div id="qr" style="margin-top:8px"></div></div><div class="card det" id="det"></div>
       <div class="card"><h3>مناسبت‌های این ماه</h3><div id="mh"></div></div>
-      <div class="card"><h3>مناسبت‌های پیش رو</h3><div id="up"></div></div>
+      <div class="card"><h3>مناسبت‌های پیش رو</h3><div id="up"></div></div><div class="card"><h3>🕌 اوقات شرعی و اذان</h3><div class="cd" id="acd">--:--:--</div><div id="anx" style="text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:8px"></div><table class="azt" id="azt"></table><label class="sw"><input type="checkbox" id="azon"> هشدار اذان (صبح، ظهر، مغرب)</label><div class="note">برای زنگ خوردن، این صفحه باید در مرورگر باز بماند و صدای گوشی روشن باشد. اوقات محاسباتی و تقریبی است و ممکن است چند دقیقه با اعلام رسمی فرق کند. <button class="chip" id="atest">آزمایش صدا</button></div></div><div class="ring" id="ring"><b id="rtx"></b><button class="btn" id="rstop">قطع</button></div>
     </div>
   </div>
 
@@ -147,6 +164,7 @@ const WD=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارش
 const JH={'1-1':'آغاز نوروز','1-2':'نوروز','1-3':'نوروز','1-4':'نوروز','1-12':'روز جمهوری اسلامی','1-13':'روز طبیعت (سیزده‌بدر)','3-14':'رحلت امام خمینی (ره)','3-15':'قیام ۱۵ خرداد','11-22':'پیروزی انقلاب اسلامی','12-29':'ملی شدن صنعت نفت ایران'};
 const HH={'1-9':'تاسوعای حسینی','1-10':'عاشورای حسینی','2-20':'اربعین حسینی','2-28':'رحلت پیامبر اکرم (ص) و شهادت امام حسن (ع)','3-8':'شهادت امام حسن عسکری (ع)','3-17':'میلاد پیامبر اکرم (ص) و امام صادق (ع)','6-3':'شهادت حضرت فاطمه (س)','7-13':'ولادت امام علی (ع)','7-27':'مبعث پیامبر اکرم (ص)','8-15':'ولادت امام زمان (عج)','9-21':'شهادت امام علی (ع)','10-1':'عید سعید فطر','10-2':'تعطیل به مناسبت عید فطر','10-25':'شهادت امام صادق (ع)','12-10':'عید سعید قربان','12-18':'عید سعید غدیر خم'};
 const DAY=864e5,U=(y,m,d)=>Date.UTC(y,m-1,d);
+const ZD=['♈ حمل','♉ ثور','♊ جوزا','♋ سرطان','♌ اسد','♍ سنبله','♎ میزان','♏ عقرب','♐ قوس','♑ جدی','♒ دلو','♓ حوت'];
 const JT={'2-1':'روز بزرگداشت سعدی','2-25':'روز بزرگداشت فردوسی','2-28':'روز بزرگداشت خیام','3-3':'سالروز آزادسازی خرمشهر','4-13':'جشن تیرگان','5-14':'سالروز صدور فرمان مشروطیت','7-16':'جشن مهرگان','7-20':'روز بزرگداشت حافظ','9-16':'روز دانشجو','9-30':'شب یلدا','12-5':'جشن سپندارمذگان (روز عشق)','12-14':'سالروز درگذشت دکتر مصدق'};
 const IG={'1-1':['سال نو میلادی',1],'2-14':['ولنتاین (روز عشق)',0],'3-8':['روز جهانی زن',0],'4-1':['روز شوخی (April Fools)',0],'4-22':['روز جهانی زمین',0],'5-1':['روز جهانی کارگر',1],'6-1':['روز جهانی کودک',0],'7-4':['روز استقلال آمریکا',0],'10-24':['روز ملل متحد',0],'10-31':['هالووین',0],'12-10':['روز جهانی حقوق بشر',0],'12-24':['شب کریسمس',0],'12-25':['کریسمس',1],'12-31':['شب سال نو میلادی',0]};
 function nth(y,m,dow,n){const f=new Date(Date.UTC(y,m-1,1)).getUTCDay();return 1+((dow-f+7)%7)+7*(n-1)}
@@ -158,7 +176,12 @@ function j2g(jy,jm,jd){jy+=1595;let days=-355668+365*jy+Math.floor(jy/33)*8+Math
 const j2ts=(y,m,d)=>{const g=j2g(y,m,d);return U(g[0],g[1],g[2])};
 const hf=new Intl.DateTimeFormat('en-u-ca-islamic-civil-nu-latn',{timeZone:'UTC',year:'numeric',month:'numeric',day:'numeric'});
 let hOff=0;
-function hij(ts){const o={};hf.formatToParts(new Date(ts+hOff*DAY+432e5)).forEach(x=>o[x.type]=+x.value);return[o.year,o.month,o.day]}
+const HT=[[1447,10,[2026,3,21]],[1447,11,[2026,4,19]],[1447,12,[2026,5,18]],[1448,1,[2026,6,16]],[1448,2,[2026,7,16]],[1448,3,[2026,8,14]],[1448,4,[2026,9,13]],[1448,5,[2026,10,12]],[1448,6,[2026,11,11]],[1448,7,[2026,12,11]],[1448,8,[2027,1,10]],[1448,9,[2027,2,8]],[1448,10,[2027,3,10]],[1448,11,[2027,4,8]],[1448,12,[2027,5,8]],[1449,1,[2027,6,6]],[1449,2,[2027,7,6]],[1449,3,[2027,8,4]],[1449,4,[2027,9,3]],[1449,5,[2027,10,2]],[1449,6,[2027,10,31]],[1449,7,[2027,11,30]],[1449,8,[2027,12,30]],[1449,9,[2028,1,28]],[1449,10,[2028,2,27]]].map(a=>[a[0],a[1],U(a[2][0],a[2][1],a[2][2])]);
+const LC={};HT.forEach(a=>LC[327+(a[0]-1)*12+a[1]-1-17364]=a[2]);
+function newMoon(k){const T=k/1236.85,E=1-.002516*T-.0000074*T*T,r=Math.PI/180,M=(2.5534+29.1053567*k-1.4e-6*T*T)*r,Mp=(201.5643+385.81693528*k+.0107582*T*T)*r,F=(160.7108+390.67050284*k-.0016118*T*T)*r,O=(124.7746-1.56375588*k+.0020672*T*T)*r,s=Math.sin;let j=2451550.09766+29.530588861*k+.00015437*T*T-1.5e-7*T*T*T+7.3e-10*T*T*T*T;j+=-.4072*s(Mp)+.17241*E*s(M)+.01608*s(2*Mp)+.01039*s(2*F)+.00739*E*s(Mp-M)-.00514*E*s(Mp+M)+.00208*E*E*s(2*M)-.00111*s(Mp-2*F)-.00057*s(Mp+2*F)+.00056*E*s(2*Mp+M)-.00042*s(3*Mp)+.00042*E*s(M+2*F)+.00038*E*s(M-2*F)-.00024*E*s(2*Mp-M)-.00017*s(O);return(j-2440587.5)*DAY}
+function ssT(day){const r=Math.PI/180,D=day/DAY+2440587.5-2451545+.5-51.39/360,fx=(a,b)=>a-b*Math.floor(a/b),g=fx(357.529+.98560028*D,360),q=fx(280.459+.98564736*D,360),L=fx(q+1.915*Math.sin(g*r)+.02*Math.sin(2*g*r),360),e=23.439-3.6e-7*D,RA=fx(Math.atan2(Math.cos(e*r)*Math.sin(L*r),Math.cos(L*r))/r/15,24),dec=Math.asin(Math.sin(e*r)*Math.sin(L*r)),la=35.69*r,h=Math.acos((-Math.sin(.833*r)-Math.sin(dec)*Math.sin(la))/(Math.cos(dec)*Math.cos(la)))/r/15;return day+(fx(12-(q/15-RA),24)-51.39/15+h)*36e5}
+function lunStart(k){if(LC[k]!=null)return LC[k];const c=newMoon(k),d0=Math.floor((c+12600000)/DAY)*DAY;return LC[k]=d0+((ssT(d0)-c)/36e5>=13?1:2)*DAY}
+function hij(ts){ts+=hOff*DAY;let k=327+Math.floor((ts-U(2026,6,16))/DAY/29.530589);while(lunStart(k)>ts)k--;while(lunStart(k+1)<=ts)k++;const x=k-327+17364;return[Math.floor(x/12)+1,x%12+1,Math.round((ts-lunStart(k))/DAY)+1]}
 function info(ts){const dt=new Date(ts),g=[dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate()],j=g2j(...g),h=hij(ts),wd=(dt.getUTCDay()+1)%7,hols=[];
  if(JH[j[1]+'-'+j[2]])hols.push(JH[j[1]+'-'+j[2]]);
  if(HH[h[1]+'-'+h[2]])hols.push(HH[h[1]+'-'+h[2]]);
@@ -172,20 +195,20 @@ const ico=n=>{for(const[r,e]of IC)if(r.test(n))return e;return'⭐'};
 const mlen=(t,y,m)=>t=='j'?(j2ts(m==12?y+1:y,m==12?1:m+1,1)-j2ts(y,m,1))/DAY:(U(y,m+1,1)-U(y,m,1))/DAY;
 const dstr=(i,t)=>t=='j'?`${fa(i.j[2])} ${JM[i.j[1]-1]} ${fa(i.j[0])}`:t=='g'?`${fa(i.g[2])} ${GM[i.g[1]-1]} ${fa(i.g[0])}`:`${fa(i.h[2])} ${HM[i.h[1]-1]} ${fa(i.h[0])}`;
 
-const tf=new Intl.DateTimeFormat('en-CA-u-nu-latn',{timeZone:'Asia/Tehran',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hourCycle:'h23'});
-function now(){const o={};tf.formatToParts(new Date()).forEach(x=>o[x.type]=+x.value);return{ts:U(o.year,o.month,o.day),h:o.hour,mi:o.minute,s:o.second}}
-let T=now(),mode='j',vy,vm,sel=T.ts;
+let tzone='Asia/Tehran',tf;const mkTf=()=>tf=new Intl.DateTimeFormat('en-CA-u-nu-latn',{timeZone:tzone,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hourCycle:'h23'});
+function now(){const n=Date.now(),o={};tf.formatToParts(new Date(n)).forEach(x=>o[x.type]=+x.value);return{ts:U(o.year,o.month,o.day),h:o.hour,mi:o.minute,s:o.second,off:Date.UTC(o.year,o.month-1,o.day,o.hour,o.minute,o.second)-Math.floor(n/1000)*1000}}
+mkTf();let T=now(),mode='j',vy,vm,sel=T.ts;
 const rel=ts=>{const d=Math.round((ts-T.ts)/DAY);return d==0?'امروز':d>0?`${fa(d)} روز دیگر`:`${fa(-d)} روز پیش`};
 const $=id=>document.getElementById(id);
 
 function setView(ts){const i=info(ts);if(mode=='j'){vy=i.j[0];vm=i.j[1]}else{vy=i.g[0];vm=i.g[1]}}
 function monthStart(){return mode=='j'?j2ts(vy,vm,1):U(vy,vm,1)}
-function renderHead(){const i=info(T.ts);$('hdates').innerHTML=`<b>${WD[i.wd]} ${dstr(i,'j')}</b><br>${dstr(i,'g')}<br>${dstr(i,'h')}`;
+function renderHead(){{const mm=Math.round(T.off/6e4),a=Math.abs(mm);$('tzn').textContent=' UTC'+(mm<0?'-':'+')+fa(Math.floor(a/60))+(a%60?':'+fa(pad(a%60)):'')}const i=info(T.ts);$('hdates').innerHTML=`<b>${WD[i.wd]} ${dstr(i,'j')}</b><br>${dstr(i,'g')}<br>${dstr(i,'h')}`;
  $('clk').textContent=`${fa(pad(T.h))}:${fa(pad(T.mi))}:${fa(pad(T.s))}`}
 function rng(a,b,k,names){return a[k][1]==b[k][1]?`${names[a[k][1]-1]} ${fa(a[k][0])}`:a[k][0]==b[k][0]?`${names[a[k][1]-1]} تا ${names[b[k][1]-1]} ${fa(a[k][0])}`:`${names[a[k][1]-1]} ${fa(a[k][0])} تا ${names[b[k][1]-1]} ${fa(b[k][0])}`}
 function renderCal(){
  const first=monthStart(),len=mlen(mode,vy,vm),a=info(first),b=info(first+(len-1)*DAY);
- $('mt').textContent=mode=='j'?`${JM[vm-1]} ${fa(vy)}`:`${GM[vm-1]} ${fa(vy)}`;
+ const z1=ZD[a.j[1]-1],z2=ZD[b.j[1]-1];$('mt').innerHTML=(mode=='j'?`${JM[vm-1]} ${fa(vy)}`:`${GM[vm-1]} ${fa(vy)}`)+`<span class="zd">${mode=='j'||z1==z2?z1:z1+' – '+z2}</span>`;
  $('ms').textContent=mode=='j'?rng(a,b,'g',GM):rng(a,b,'j',JM);
  const names=mode=='j'?WD:['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'],lead=mode=='j'?a.wd:(a.wd+1)%7;let h=names.map((w,i)=>`<div class="wd${(mode=='j'?i==6:i==0)?' fri':''}">${w}</div>`).join('');
  for(let i=0;i<lead;i++)h+='<div class="empty"></div>';
@@ -198,11 +221,11 @@ function renderCal(){
  $('mh').querySelectorAll('.li').forEach(c=>c.onclick=()=>{sel=+c.dataset.ts;renderCal();renderDet()});
 }
 function renderDet(){const i=info(sel),o=occ(i);
- $('det').innerHTML=`<h3>روز انتخاب‌شده</h3><div class="big">${o.length?`<span style="font-size:1.8rem">${o[0].k=='dia'?'💎':ico(o[0].n)}</span> `:''}${WD[i.wd]}</div><div>شمسی: <b>${dstr(i,'j')}</b></div><div>میلادی: <b>${dstr(i,'g')}</b></div><div>قمری: <b>${dstr(i,'h')}</b></div><div class="rel">${rel(sel)}</div>`+
+ $('det').innerHTML=`<h3>روز انتخاب‌شده</h3><div class="big">${o.length?`<span style="font-size:1.8rem">${o[0].k=='dia'?'💎':ico(o[0].n)}</span> `:''}${WD[i.wd]}</div><div>شمسی: <b>${dstr(i,'j')}</b></div><div>میلادی: <b>${dstr(i,'g')}</b></div><div>قمری: <b>${dstr(i,'h')}</b></div><div>برج فلکی: <b>${ZD[i.j[1]-1]}</b></div><div class="rel">${rel(sel)}</div>`+
  (o.length?o.map(x=>`<div><span class="tag${x.k=='hist'?' gold':x.k=='dia'?' dia':''}">${x.k=='dia'?'💎':ico(x.n)} ${x.k=='off'&&mode=='j'?'تعطیل: ':''}${x.n}</span></div>`).join(''):mode=='j'&&i.fri?'<div><span class="tag">جمعه، تعطیل آخر هفته</span></div>':(mode=='j'?'<div class="note">روز کاری</div>':''))}
 function renderUp(){let l='',n=0,last='';for(let d=0;d<420&&n<6;d++){const i=info(T.ts+d*DAY);const o=occ(i);if(o.length){const nm=o.map(x=>(x.k=='dia'?'💎 ':ico(x.n)+' ')+x.n).join('، ');if(nm==last){continue}last=nm;n++;l+=`<div class="li" data-ts="${i.ts}"><span>${nm}<br><small style="color:var(--muted)">${dstr(i,mode)}</small></span><span>${rel(i.ts)}</span></div>`}else last=''}
  $('up').innerHTML=l;$('up').querySelectorAll('.li').forEach(c=>c.onclick=()=>{sel=+c.dataset.ts;setView(sel);renderCal();renderDet()})}
-function renderAll(){renderHead();renderCal();renderDet();renderUp();calc()}
+function renderAll(){renderHead();renderCal();renderDet();renderUp();calc();azTick();srch()}
 
 $('modeSeg').onclick=e=>{const m=e.target.dataset.m;if(!m||m==mode)return;const ts=monthStart()+14*DAY;mode=m;setView(ts);[...$('modeSeg').children].forEach(b=>b.classList.toggle('on',b.dataset.m==m));renderCal();renderDet();renderUp()};
 $('prev').onclick=()=>{vm--;if(vm<1){vm=12;vy--}renderCal()};
@@ -219,7 +242,7 @@ syncT();window.matchMedia('(prefers-color-scheme:dark)').addEventListener('chang
 let ct='j',lastA=T.ts,lastB=j2ts(1406,1,1);
 function box(id,t){return`<div class="box"><label>${t}</label><div class="f"><input type="number" id="${id}d" min="1" max="31" aria-label="روز"><select id="${id}m" aria-label="ماه"></select><input type="number" id="${id}y" aria-label="سال" style="width:84px"></div></div>`}
 $('boxes').innerHTML=box('a','از تاریخ')+box('b','تا تاریخ');
-function fillMonths(){['a','b'].forEach(p=>{$(p+'m').innerHTML=(ct=='j'?JM:GM).map((n,i)=>`<option value="${i+1}">${n}</option>`).join('')})}
+function fillMonths(){['a','b'].forEach(p=>{$(p+'m').innerHTML=(ct=='j'?JM:GM).map((n,i)=>`<option value="${i+1}">${n}${ct=='j'?' '+ZD[i].split(' ')[0]:''}</option>`).join('')})}
 function setD(p,ts){const i=info(ts),v=ct=='j'?i.j:i.g;$(p+'y').value=v[0];$(p+'m').value=v[1];$(p+'d').value=v[2]}
 function getD(p){const y=+$(p+'y').value,m=+$(p+'m').value,d=+$(p+'d').value;if(!y||!d)return null;if(d<1||d>mlen(ct,y,m))return null;return ct=='j'?j2ts(y,m,d):U(y,m,d)}
 function ymd(a,b){const A=info(a),B=info(b),k=ct=='j'?'j':'g';let y=B[k][0]-A[k][0],m=B[k][1]-A[k][1],d=B[k][2]-A[k][2];if(d<0){m--;const pm=B[k][1]==1?12:B[k][1]-1,py=B[k][1]==1?B[k][0]-1:B[k][0];d+=mlen(ct,py,pm)}if(m<0){y--;m+=12}return[y,m,d]}
@@ -239,8 +262,49 @@ $('chips').innerHTML=chips.map((c,i)=>`<button class="chip" data-i="${i}">${c[0]
 $('chips').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;setD('a',T.ts);setD('b',chips[i][1]());calc()};
 fillMonths();setD('a',lastA);setD('b',lastB);
 
+/* cities */
+const CT='تهران|Asia/Tehran|35.69|51.39|1;مشهد|Asia/Tehran|36.30|59.60|1;اصفهان|Asia/Tehran|32.65|51.67|1;شیراز|Asia/Tehran|29.59|52.58|1;تبریز|Asia/Tehran|38.08|46.29|1;اهواز|Asia/Tehran|31.32|48.67|1;باکو|Asia/Baku|40.41|49.87|0;ایروان|Asia/Yerevan|40.18|44.51|0;استانبول|Europe/Istanbul|41.01|28.98|0;بغداد|Asia/Baghdad|33.31|44.37|0;دمشق|Asia/Damascus|33.51|36.29|0;ریاض|Asia/Riyadh|24.71|46.68|0;مکه|Asia/Riyadh|21.42|39.83|0;دبی|Asia/Dubai|25.20|55.27|0;دوحه|Asia/Qatar|25.29|51.53|0;مسقط|Asia/Muscat|23.59|58.41|0;قاهره|Africa/Cairo|30.04|31.24|0;کابل|Asia/Kabul|34.53|69.17|0;کراچی|Asia/Karachi|24.86|67.01|0;دهلی|Asia/Kolkata|28.61|77.21|0;تاشکند|Asia/Tashkent|41.30|69.24|0;مسکو|Europe/Moscow|55.75|37.62|0;پکن|Asia/Shanghai|39.90|116.40|0;توکیو|Asia/Tokyo|35.68|139.69|0;سئول|Asia/Seoul|37.57|126.98|0;سنگاپور|Asia/Singapore|1.35|103.82|0;سیدنی|Australia/Sydney|-33.87|151.21|0;برلین|Europe/Berlin|52.52|13.40|0;پاریس|Europe/Paris|48.86|2.35|0;لندن|Europe/London|51.51|-0.13|0;رم|Europe/Rome|41.90|12.50|0;مادرید|Europe/Madrid|40.42|-3.70|0;استکهلم|Europe/Stockholm|59.33|18.07|0;تورنتو|America/Toronto|43.65|-79.38|0;نیویورک|America/New_York|40.71|-74.01|0;شیکاگو|America/Chicago|41.88|-87.63|0;لس‌آنجلس|America/Los_Angeles|34.05|-118.24|0;ساوپائولو|America/Sao_Paulo|-23.55|-46.63|0;ژوهانسبورگ|Africa/Johannesburg|-26.20|28.05|0'.split(';').map(s=>{const a=s.split('|');return{n:a[0],z:a[1],lat:+a[2],lon:+a[3],iran:a[4]=='1'}});
+let CITY=CT[0],PT=null;const fired={};
+(function(){let h='<optgroup label="شهرهای پرکاربرد">'+CT.map((c,i)=>`<option value="${i}">${c.n}</option>`).join('')+'</optgroup>';try{const u=new Set(CT.map(c=>c.z));h+='<optgroup label="سایر شهرها و مناطق زمانی">'+Intl.supportedValuesOf('timeZone').filter(z=>!u.has(z)).map(z=>`<option value="z:${z}">${(z.split('/').slice(1).join(' / ')||z).replace(/_/g,' ')}</option>`).join('')+'</optgroup>'}catch(e){}$('city').innerHTML=h})();
+function setCity(v,sv){if(v.startsWith('z:')){const z=v.slice(2);CITY={n:z,z,lat:NaN,lon:NaN,iran:false}}else CITY=CT[+v];tzone=CITY.z;mkTf();T=now();sel=T.ts;setView(T.ts);PT=null;$('city').value=v;if(sv)try{localStorage.setItem('city',v)}catch(e){}renderAll()}
+$('city').onchange=e=>setCity(e.target.value,true);
+/* analog clock */
+(function(){let s='<circle r="97" fill="rgba(255,255,255,.94)" stroke="#0b3b5c" stroke-width="4"/>';for(let i=0;i<60;i++){const a=i*6*Math.PI/180,r=i%5?90:83;s+=`<line x1="${Math.sin(a)*r}" y1="${-Math.cos(a)*r}" x2="${Math.sin(a)*94}" y2="${-Math.cos(a)*94}" stroke="#0b3b5c" stroke-width="${i%5?1:3}"/>`}for(let i=1;i<=12;i++){const a=i*30*Math.PI/180;s+=`<text x="${Math.sin(a)*67}" y="${-Math.cos(a)*67+6}" text-anchor="middle" font-size="17" font-weight="700" fill="#0b3b5c" font-family="Vazirmatn,Tahoma">${fa(i)}</text>`}s+='<line id="hnH" y2="-44" stroke="#0b3b5c" stroke-width="6" stroke-linecap="round"/><line id="hnM" y2="-65" stroke="#0b3b5c" stroke-width="4" stroke-linecap="round"/><line id="hnS" y1="14" y2="-76" stroke="#e11d48" stroke-width="2" stroke-linecap="round"/><circle r="5" fill="#e11d48"/>';$('an').innerHTML=s})();
+function hands(){const l=new Date(Date.now()+T.off),s=l.getUTCSeconds()+l.getUTCMilliseconds()/1000,m=l.getUTCMinutes()+s/60,h=l.getUTCHours()%12+m/60;$('hnS').setAttribute('transform','rotate('+s*6+')');$('hnM').setAttribute('transform','rotate('+m*6+')');$('hnH').setAttribute('transform','rotate('+h*30+')');requestAnimationFrame(hands)}hands();
+/* azan */
+const RD=Math.PI/180,sn=d=>Math.sin(d*RD),cs=d=>Math.cos(d*RD),ac=x=>Math.acos(x)/RD,fx=(a,b)=>a-b*Math.floor(a/b);
+const offAt=ms=>{const o={};new Intl.DateTimeFormat('en-CA-u-nu-latn',{timeZone:tzone,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',second:'numeric',hourCycle:'h23'}).formatToParts(new Date(ms)).forEach(x=>o[x.type]=+x.value);return(Date.UTC(o.year,o.month-1,o.day,o.hour,o.minute,o.second)-Math.floor(ms/1000)*1000)/36e5};
+function jul(y,m,d){if(m<=2){y--;m+=12}const A=Math.floor(y/100);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+2-A+Math.floor(A/4)-1524.5}
+function sunp(jd){const D=jd-2451545,g=fx(357.529+.98560028*D,360),q=fx(280.459+.98564736*D,360),L=fx(q+1.915*sn(g)+.02*sn(2*g),360),e=23.439-3.6e-7*D,RA=fx(Math.atan2(cs(e)*sn(L),cs(L))/RD/15,24);return[Math.asin(sn(e)*sn(L))/RD,q/15-RA]}
+function ptimes(c,ts){const g=new Date(ts),jd=jul(g.getUTCFullYear(),g.getUTCMonth()+1,g.getUTCDate())-c.lon/360,tz=offAt(ts+432e5),adj=x=>x+tz-c.lon/15;const ang=(a,t,cc)=>{const p=sunp(jd+t),v=(-sn(a)-sn(p[0])*sn(c.lat))/(cs(p[0])*cs(c.lat));return Math.abs(v)>1?NaN:fx(12-p[1],24)+(cc?-1:1)*ac(v)/15};return{fajr:adj(ang(c.iran?17.7:18,5/24,1)),rise:adj(ang(.833,6/24,1)),dhuhr:adj(fx(12-sunp(jd+.5)[1],24)),sunset:adj(ang(.833,18/24,0)),maghrib:adj(c.iran?ang(4.5,18/24,0):ang(.833,18/24,0)),isha:adj(c.iran?ang(14,18/24,0):ang(17,18/24,0))}}
+const fmt=h=>{if(isNaN(h))return'—';const m=Math.round(fx(h,24)*60);return fa(pad(Math.floor(m/60)%24))+':'+fa(pad(m%60))};
+let AC,rt;
+const mkAC=()=>{try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();AC.resume()}catch(e){}};
+function tone(f,t0,d){const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(.3,t0+.05);g.gain.exponentialRampToValueAtTime(.001,t0+d);o.connect(g);g.connect(AC.destination);o.start(t0);o.stop(t0+d+.05)}
+function melody(){if(!AC)return;const t=AC.currentTime;[392,440,392,349,330,349,392,0,330,349,392,440,392,349,330,294].forEach((f,i)=>{if(f)tone(f,t+i*.55,.7)})}
+function ring(n){$('rtx').textContent='🕌 وقت '+n;$('ring').style.display='flex';mkAC();melody();clearInterval(rt);rt=setInterval(melody,10000);setTimeout(()=>$('rstop').onclick(),60000);try{navigator.vibrate&&navigator.vibrate([400,200,400,200,400])}catch(e){}try{window.Notification&&Notification.permission=='granted'&&new Notification('کوروش تقویم',{body:'وقت '+n})}catch(e){}}
+$('rstop').onclick=()=>{clearInterval(rt);$('ring').style.display='none'};
+$('azon').onchange=e=>{if(e.target.checked){mkAC();try{window.Notification&&Notification.requestPermission()}catch(x){}}};
+$('atest').onclick=()=>{mkAC();melody()};
+function azTick(){const c=CITY;if(!c||isNaN(c.lat)){$('acd').textContent='—';$('anx').textContent='برای این شهر مختصات ثبت نشده؛ یکی از شهرهای پرکاربرد را انتخاب کنید.';$('azt').innerHTML='';return}
+ if(!PT||PT.k!=T.ts+c.n){PT={k:T.ts+c.n,L:[['اذان صبح','fajr',1],['طلوع آفتاب','rise',0],['اذان ظهر','dhuhr',1],['غروب آفتاب','sunset',0],['اذان مغرب','maghrib',1],['عشا','isha',0]],t:ptimes(c,T.ts),tm:ptimes(c,T.ts+DAY)}}
+ const now=T.h*3600+T.mi*60+T.s;let nx=null;
+ for(const[n,k,a]of PT.L){if(!a)continue;const s=Math.round(PT.t[k]*3600);if(s>now){nx=[n,s-now,k];break}}
+ if(!nx)nx=['اذان صبح',Math.round((PT.tm.fajr+24)*3600)-now,'fajr'];
+ $('acd').textContent=fa(pad(Math.floor(nx[1]/3600)))+':'+fa(pad(Math.floor(nx[1]%3600/60)))+':'+fa(pad(nx[1]%60));$('anx').textContent='تا '+nx[0]+' — '+c.n;
+ if(PT.sh!=PT.k+nx[2]){PT.sh=PT.k+nx[2];$('azt').innerHTML=PT.L.map(r=>`<tr class="${r[1]==nx[2]?'nx':''}"><td>${r[0]}</td><td>${fmt(PT.t[r[1]])}</td></tr>`).join('')}
+ if($('azon').checked)for(const[n,k,a]of PT.L){if(!a)continue;const s=Math.round(PT.t[k]*3600);if(now>=s&&now<s+20&&!fired[T.ts+k]){fired[T.ts+k]=1;ring(n)}}}
+/* occasion search */
+let OC=[],OCk='';const nz=s=>s.replace(/[يى]/g,'ی').replace(/ك/g,'ک').replace(/[\u200c\s]+/g,'').toLowerCase();
+function buildOC(){const k=T.ts+'|'+hOff;if(OCk==k)return OC;OCk=k;OC=[];for(let d=0;d<760;d++){const i=info(T.ts+d*DAY),a=[].concat(i.hols,i.cyrus?['روز بزرگداشت کوروش بزرگ']:[],i.hist,i.ig.map(x=>x[0]));a.forEach(n=>OC.push({ts:i.ts,n}))}return OC}
+function srch(){const q=nz($('q').value),el=$('qr');if(!q){el.innerHTML='<div class="note">نام مناسبت را بنویس تا تاریخ و «چند روز دیگه» را ببینی.</div>';return}const r=[],lt={};for(const e of buildOC()){if(!nz(e.n).includes(q))continue;if(lt[e.n]!=null&&e.ts-lt[e.n]<=7*DAY){lt[e.n]=e.ts;continue}lt[e.n]=e.ts;r.push(e);if(r.length>=12)break}
+ el.innerHTML=r.length?r.map(e=>{const i=info(e.ts);return`<div class="li" data-ts="${e.ts}"><span>${e.n=='روز بزرگداشت کوروش بزرگ'?'💎':ico(e.n)} ${e.n}<br><small style="color:var(--muted)">${dstr(i,'j')} — ${dstr(i,'g')}</small></span><span>${rel(e.ts)}</span></div>`}).join(''):'<div class="note">چیزی پیدا نشد.</div>';
+ el.querySelectorAll('.li').forEach(c=>c.onclick=()=>{sel=+c.dataset.ts;setView(sel);renderCal();renderDet();$('cg').scrollIntoView({behavior:'smooth',block:'nearest'})})}
+$('q').oninput=srch;
+addEventListener('pointerdown',()=>{if($('azon').checked)mkAC()});
+{let sv;try{sv=localStorage.getItem('city')}catch(e){}if(sv&&(sv.startsWith('z:')||CT[+sv]))setCity(sv,false)}
 setView(T.ts);renderAll();
-setInterval(()=>{const n=now(),ch=n.ts!=T.ts;T=n;if(ch){sel=sel==T.ts-DAY?T.ts:sel;renderAll()}else renderHead()},1000);
+setInterval(()=>{const n=now(),ch=n.ts!=T.ts;T=n;if(ch){sel=sel==T.ts-DAY?T.ts:sel;renderAll()}else{renderHead();azTick()}},1000);
 </script>
 </body>
 </html>
